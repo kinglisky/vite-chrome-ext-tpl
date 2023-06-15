@@ -5,4 +5,11 @@ import manifest from './manifest.json' assert { type: 'json' }; // Node >=17
 
 export default defineConfig({
     plugins: [vue(), crx({ manifest })],
+    server: {
+        port: 5173,
+        strictPort: true,
+        hmr: {
+            port: 5173,
+        },
+    },
 });
