@@ -1,6 +1,12 @@
-(async () => {
-    console.log('content init');
-    const response = await chrome.runtime.sendMessage({ greeting: 'hello' });
-    // do something with response here, not outside the function
-    console.log('response', response);
-})();
+console.log('content init');
+
+const port = chrome.runtime.connect({ name: 'knockknock' });
+
+port.postMessage({ joke: 'Knock knock' });
+
+port.onMessage.addListener(function (msg) {
+    console.log('content port.onMessage', msg);
+    if (msg.question === "Who's there?") port.postMessage({ answer: 'Madame' });
+    else if (msg.question === 'Madame who?')
+        port.postMessage({ answer: 'Madame... Bovary' });
+});
